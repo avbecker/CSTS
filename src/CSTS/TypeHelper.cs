@@ -23,7 +23,8 @@ namespace CSTS
 
     public static bool IsDictionary(Type t)
     {
-      if (typeof(IDictionary).IsAssignableFrom(t))
+      if (typeof(IDictionary).IsAssignableFrom(t) ||
+        (t.IsGenericType && t.GetGenericTypeDefinition() == typeof(IDictionary<,>)))
       {
         return true;
       }

@@ -150,6 +150,6 @@ namespace CSTS
       this.ManualTypeName = type;
     }
 
-    public string ManualTypeName { get; }
+    public string ManualTypeName { get; private set; }
   }
 }

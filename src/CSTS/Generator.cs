@@ -95,7 +95,9 @@ namespace CSTS
       {
         var args = tst.ClrType.GetGenericArguments();
 
-        if (typeof(IDictionary).IsAssignableFrom(tst.ClrType) && args.Length == 2)
+        if ((typeof(IDictionary).IsAssignableFrom(tst.ClrType)
+          || (t.IsGenericType && t.GetGenericTypeDefinition() == typeof(IDictionary<,>)))
+          && args.Length == 2)
         {
           var keyTst = GetTypeScriptType(args[0]);
 
@@ -288,7 +290,7 @@ namespace CSTS
     {
       TypeScriptType tst;
 
-      var manualType = _options.ManualTypes?.Invoke(type);
+      var manualType = _options.ManualTypes != null ? _options.ManualTypes.Invoke(type) : null;
       if (manualType != null)
       {
         tst = new ManualType(manualType);
